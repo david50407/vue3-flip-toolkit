@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "paths": {
+      "vue3-flip-toolkit": [
+        "./lib/index.ts"
+      ],
+      "vue3-flip-toolkit/*": [
+        "./lib/*"
+      ]
+    }
+  },
+  "include": [
+    "stories/**/*.ts",
+    "stories/**/*.d.ts",
+    "stories/**/*.tsx",
+    "stories/**/*.vue",
+    "stories/vite-env.d.ts",
+    "stories/shims-vue.d.ts",
+    "lib/**/*.ts",
+    "lib/**/*.d.ts",
+    "lib/**/*.tsx",
+    "lib/**/*.vue"
+  ]
+}

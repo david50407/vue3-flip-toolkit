@@ -1,0 +1,20 @@
+{
+  "version": "0.1",
+  "language": "en",
+  "languageSettings": [
+    {
+      "languageId": "vue",
+      "dictionaries": [
+        "vue",
+        "html",
+        "typescript",
+        "softwareTerms"
+      ]
+    }
+  ],
+  "words": [
+    "vite",
+    "vitejs",
+    "serializable"
+  ]
+}

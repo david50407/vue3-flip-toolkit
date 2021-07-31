@@ -1,0 +1,10 @@
+{
+  "volar.tsPlugin": true,
+  "volar.codeLens.pugTools": false,
+  "editor.defaultFormatter": "johnsoncodehk.volar",
+  "editor.formatOnSave": true,
+  "typescript.format.semicolons": "remove",
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+}
