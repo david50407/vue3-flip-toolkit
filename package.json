@@ -1,6 +1,10 @@
 {
   "name": "vue3-flip-toolkit",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/david50407/vue3-flip-toolkit.git"
+  },
   "files": ["dist"],
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
