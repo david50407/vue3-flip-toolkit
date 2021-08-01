@@ -1,5 +1,3 @@
-const { resolve } = require('path')
-
 module.exports = {
   "stories": [
     "../stories/**/*.stories.mdx",
@@ -12,15 +10,4 @@ module.exports = {
   "core": {
     "builder": "storybook-builder-vite"
   },
-  async viteFinal(config) {
-    return {
-      ...config,
-
-      resolve: {
-        alias: {
-          'vue3-flip-toolkit': resolve(__dirname, '..', 'lib'),
-        },
-      },
-    }
-  }
 }

@@ -1,0 +1,27 @@
+diff --git a/node_modules/flip-toolkit/lib/Flipper.d.ts b/node_modules/flip-toolkit/lib/Flipper.d.ts
+index 38d2688..8f2ca9d 100644
+--- a/node_modules/flip-toolkit/lib/Flipper.d.ts
++++ b/node_modules/flip-toolkit/lib/Flipper.d.ts
+@@ -1,6 +1,7 @@
+ import { StaggerConfig, HandleEnterUpdateDelete, OnFlipperComplete, FlippedProps } from './types';
+ import { SpringOption } from './springSettings/types';
+-interface Options {
++// HACK: add visibility
++export interface Options {
+     element: HTMLElement;
+     staggerConfig?: StaggerConfig;
+     spring?: SpringOption;
+diff --git a/node_modules/flip-toolkit/lib/types.d.ts b/node_modules/flip-toolkit/lib/types.d.ts
+index 0fd574d..3455d98 100644
+--- a/node_modules/flip-toolkit/lib/types.d.ts
++++ b/node_modules/flip-toolkit/lib/types.d.ts
+@@ -1,4 +1,8 @@
+-/// <reference types="react" />
++// HACK: mock React.ReactNode to avoid linking with `react`
++declare namespace React {
++  type ReactNode = any
++}
++
+ import { SpringOption } from './springSettings/types';
+ export { FlippedElementPositionsBeforeUpdateReturnVals } from './flip/getFlippedElementPositions/getFlippedElementPositionsBeforeUpdate/types';
+ export declare type FlipId = string | number;

@@ -1,18 +1,26 @@
 <template>
-  <component :is="props.is" ref="element">
+  <component :is="$props.is" ref="element">
     <slot></slot>
   </component>
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeUpdate, onMounted, watch, nextTick, provide, withDefaults } from 'vue'
-import type { SpringOption } from 'flip-toolkit/lib/springSettings/types'
-import type { HandleEnterUpdateDelete, StaggerConfig } from 'flip-toolkit/lib/types'
+import { ref, onBeforeUpdate, onMounted, watch, nextTick, provide } from 'vue'
 import { ProvidedAddFlippedKey, ProvidedAddInvertedKey } from 'vue3-flip-toolkit/symbols'
+import type { HandleEnterUpdateDelete, SpringOption, StaggerConfig } from 'vue3-flip-toolkit/types'
 import { createLazyFlipper } from './LazyFlipper'
 
-const props = withDefaults(defineProps<{
-  flipKey: string | number | boolean
+type Props = {
+  /**
+   * HACK: Vue/TS cannot handle too complex type, we are setting this prop as optional with default here.
+   *
+   * @default false
+   *
+   * @todo Follow up the issue
+   *
+   * @see {@link https://github.com/vuejs/vue-next/issues/4224}
+   */
+  flipKey?: string | number | boolean
   is?: string
   decisionData?: any
   spring?: SpringOption
@@ -20,13 +28,16 @@ const props = withDefaults(defineProps<{
   applyTransformOrigin?: boolean
   handleEnterUpdateDelete?: HandleEnterUpdateDelete
   debug?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  flipKey: false,
   is: 'div',
   debug: false,
 })
 
 const element = ref<HTMLElement>()
-const flipperInstance = createLazyFlipper({ debug: props.debug })
+const flipperInstance = createLazyFlipper()
 const previousDecisionData = ref<any>(props.decisionData)
 
 onMounted(() => {
@@ -39,7 +50,7 @@ onBeforeUpdate(() => {
 
 watch(() => props.decisionData, (_, oldValue) => previousDecisionData.value = oldValue)
 watch(() => props.flipKey, (newVal, oldVal) => {
-  if (newVal == oldVal) { return }
+  if (newVal === oldVal) { return }
 
   nextTick(() => {
     flipperInstance.update(previousDecisionData.value, props.decisionData)
@@ -56,6 +67,6 @@ provide(ProvidedAddFlippedKey, (props) => {
 })
 
 provide(ProvidedAddInvertedKey, (props) => {
-  flipperInstance.addInverted(props)
+  flipperInstance.addInverted(props as any)
 })
 </script>

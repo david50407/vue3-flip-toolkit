@@ -4,9 +4,9 @@ Vue 3 port of [flip-toolkit](https://github.com/aholachek/react-flip-toolkit).
 
 ## Examples
 
-See examples in storybook or source of examples under `stories/`.
+See examples in storybook or source of examples under `storybook/stories/`.
 
-To launch storybook, run `npm run serve`.
+To launch storybook, run `npm run serve` in `storybook/`.
 
 ## Different to `react-flip-toolkit`
 

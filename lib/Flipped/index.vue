@@ -1,15 +1,13 @@
 <template>
-  <component :is="props.is" ref="element">
+  <component :is="is" ref="element">
     <slot></slot>
   </component>
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, ref, withDefaults } from 'vue'
-import type { DecisionData, FlipId } from 'flip-toolkit/lib/types'
-import type { SpringOption } from 'flip-toolkit/lib/springSettings/types'
+import { inject, onMounted, ref } from 'vue'
 import { ProvidedAddFlippedKey, ProvidedAddInvertedKey } from 'vue3-flip-toolkit/symbols'
-import type { CamelCase } from 'vue3-flip-toolkit/types'
+import type { DecisionData, FlipId, SpringOption } from 'vue3-flip-toolkit/types'
 
 /**
  * Copied structure from flip-toolkit.
@@ -20,7 +18,6 @@ import type { CamelCase } from 'vue3-flip-toolkit/types'
 type PropsAndHandlers = {
   is?: string
   flipId?: FlipId
-  portalKey?: string
   opacity?: boolean
   translate?: boolean
   scale?: boolean
@@ -48,19 +45,28 @@ type PropsAndHandlers = {
   }) => void
 }
 
-const { flipId, inverseFlipId, ...props } = withDefaults(defineProps<PropsAndHandlers>(), {
+const { is, flipId, inverseFlipId, ...props } = withDefaults(defineProps<PropsAndHandlers>(), {
   is: 'div',
   opacity: false,
   scale: false,
   translate: false,
 })
 
-type HandlerData<Handler extends `on${string}`> =
-  Handler extends keyof PropsAndHandlers ? Parameters<Required<PropsAndHandlers>[Handler]>[0] : never
-type EventTypes = 'appear' | 'start' | 'spring-update' | 'complete' | 'exit'
-const emits = defineEmits<{
-  <T extends EventTypes>(e: T, data: HandlerData<CamelCase<`on-${T}`>>): void
-}>()
+type ReturnBoolean<T> = T extends (...args: infer Args) => any
+  ? (...args: Args) => boolean
+  : never
+/**
+ * HACK: I don't know why type definition is not working, use object definition instead.
+ *
+ * @see {@link #PropsAndHandlers}
+ */
+const emits = defineEmits({
+  appear: (() => true) as ReturnBoolean<PropsAndHandlers['onAppear']>,
+  start: (() => true) as ReturnBoolean<PropsAndHandlers['onStart']>,
+  'spring-update': (() => true) as ReturnBoolean<PropsAndHandlers['onSpringUpdate']>,
+  complete: (() => true) as ReturnBoolean<PropsAndHandlers['onComplete']>,
+  exit: (() => true) as ReturnBoolean<PropsAndHandlers['onExit']>,
+})
 
 const element = ref<HTMLElement>()
 const addFlipped = inject(ProvidedAddFlippedKey)
@@ -71,7 +77,6 @@ onMounted(() => {
     addFlipped?.({
       flipId,
       element: element.value!,
-      portalKey: props.portalKey,
       opacity: props.opacity,
       translate: props.translate,
       scale: props.scale,

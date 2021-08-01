@@ -12,23 +12,11 @@
       "esnext",
       "dom"
     ],
-    "paths": {
-      "vue3-flip-toolkit": [
-        "./lib/index.ts"
-      ],
-      "vue3-flip-toolkit/*": [
-        "./lib/*"
-      ]
-    }
   },
   "include": [
-    "lib/**/*.ts",
-    "lib/**/*.d.ts",
-    "lib/**/*.tsx",
-    "lib/**/*.vue"
-  ],
-  "exclude": [
-    "node_module/**",
-    "storybook/**"
+    "stories/**/*.ts",
+    "stories/**/*.d.ts",
+    "stories/**/*.tsx",
+    "stories/**/*.vue",
   ]
 }

@@ -5,12 +5,6 @@ type ConstructorProps = ConstructorParameters<typeof Flipper>[0]
 export interface LazyFlipper extends Omit<Flipper, 'debug'> {
   initialize(element: Element): void
   setOptions(options: Omit<Partial<ConstructorProps>, 'element'>): void
-
-  /**
-   * @override
-    */
-  get debug(): boolean
-  set debug(value: boolean)
 }
 
 export const createLazyFlipper = (initOptions: Partial<ConstructorProps> = {}): LazyFlipper => {
@@ -49,16 +43,6 @@ export const createLazyFlipper = (initOptions: Partial<ConstructorProps> = {}): 
       }
 
       flipperInstance?.addInverted(...args)
-    },
-    get debug() {
-      return flipperInstance?.['debug'] ?? false
-    },
-    set debug(value: boolean) {
-      options.debug = value
-
-      if (flipperInstance) {
-        flipperInstance['debug'] = value
-      }
     },
   } as Partial<LazyFlipper>, {
     get(this: LazyFlipper, target: LazyFlipper, propertyKey: keyof Flipper) {
